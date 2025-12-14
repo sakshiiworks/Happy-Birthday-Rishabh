@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Rishabh!</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            100: '#FFF9C4',
+                            300: '#FDD835',
+                            400: '#FBC02D',
+                            500: '#D4AF37', // Classic Gold
+                            600: '#C5A028',
+                            700: '#B8860B', // Dark Goldenrod
+                        },
+                        richBlack: '#050505',
+                        charcoal: '#1a1a1a'
+                    },
+                    fontFamily: {
+                        heading: ['Cinzel', 'serif'],
+                        subheading: ['Playfair Display', 'serif'],
+                        body: ['Poppins', 'sans-serif'],
+                        handwriting: ['Dancing Script', 'cursive'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'shimmer': 'shimmer 2s linear infinite',
+                        'fade-in-up': 'fadeInUp 1s ease-out forwards',
+                        'unlock': 'unlock 1.5s ease-in-out forwards',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-1000px 0' },
+                            '100%': { backgroundPosition: '1000px 0' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        unlock: {
+                            '0%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.2) rotate(-10deg)' },
+                            '100%': { transform: 'scale(0) rotate(20deg)', opacity: '0' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #050505;
+            background-image: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+            color: #f3f3f3;
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .text-gradient-gold {
+            background: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 200% auto;
+            animation: shimmer 4s linear infinite;
+        }
+
+        .glass-panel {
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .glass-panel-hover:hover {
+            border-color: rgba(212, 175, 55, 0.5);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+            transform: translateY(-5px);
+        }
+
+        /* Interactive Elements */
+        .choice-btn {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .choice-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .choice-btn:hover::before {
+            left: 100%;
+        }
+
+        .choice-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Screen Transitions */
+        .screen {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
+        
+        .screen.active {
+            display: flex;
+            opacity: 1;
+            animation: fadeInUp 0.8s forwards;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D4AF37; 
+        }
+
+        /* Confetti */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center selection:bg-gold-500 selection:text-black">
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- Background Ambience -->
+    <div class="fixed top-0 left-0 w-full h-full pointer-events-none overflow-hidden z-0 opacity-30">
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-gold-600 rounded-full mix-blend-overlay filter blur-[128px] animate-pulse-slow"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-gold-400 rounded-full mix-blend-overlay filter blur-[100px] animate-pulse-slow" style="animation-delay: 2s;"></div>
+    </div>
+
+    <!-- Music Player (Replaced with Happy Birthday Tune) -->
+    <audio id="bg-music">
+        <!-- Using a royalty free birthday tune source -->
+        <source src="https://cdn.pixabay.com/download/audio/2023/10/06/audio_996c9c6145.mp3?filename=happy-birthday-to-you-bossa-nova-style-171306.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- CONTENT WRAPPER -->
+    <div class="relative z-10 w-full max-w-5xl px-4 py-8 md:py-12 min-h-screen flex flex-col justify-center">
+
+        <!-- SCREEN 1: WELCOME -->
+        <section id="screen-welcome" class="screen active flex-col items-center text-center">
+            <div class="mb-8 relative">
+                <i class="fas fa-crown text-6xl text-gold-500 animate-float mb-6 filter drop-shadow-[0_0_10px_rgba(212,175,55,0.5)]"></i>
+            </div>
+            
+            <h1 class="font-heading text-5xl md:text-7xl font-bold text-gradient-gold mb-6 tracking-wide">
+                Hey Birthday King
+            </h1>
+            
+            <p class="font-subheading text-xl md:text-2xl text-gray-300 mb-12 max-w-2xl leading-relaxed">
+                This isn’t just a website.<br>
+                It’s a small adventure made only for you.
+            </p>
+
+            <button onclick="nextScreen('screen-q1')" class="group relative px-10 py-4 bg-transparent border border-gold-500 rounded-full overflow-hidden transition-all hover:bg-gold-500/10">
+                <span class="relative z-10 font-heading text-gold-400 text-lg tracking-[0.2em] group-hover:text-gold-200 transition-colors">START JOURNEY</span>
+                <div class="absolute inset-0 h-full w-full scale-0 rounded-full transition-all duration-300 group-hover:scale-100 group-hover:bg-gold-500/10"></div>
+            </button>
+        </section>
+
+        <!-- SCREEN 2: Q1 (Lucky) -->
+        <section id="screen-q1" class="screen flex-col items-center justify-center max-w-2xl mx-auto w-full">
+            <div class="glass-panel p-8 md:p-12 rounded-2xl w-full text-center border-t border-gold-500/30">
+                <h2 class="font-subheading text-3xl text-gold-100 mb-2">Question 1</h2>
+                
+                <p class="text-2xl font-semibold mb-8 text-white">"Do you feel lucky to have me in your life?"</p>
+                
+                <div class="grid gap-4 w-full">
+                    <button onclick="handleQ1Answer(this)" class="choice-btn p-4 rounded-lg bg-gray-900 border border-gray-800 text-gray-300 hover:border-gold-500/50 text-left">
+                        A. Yes
+                    </button>
+                    <button onclick="handleQ1Answer(this)" class="choice-btn p-4 rounded-lg bg-gray-900 border border-gray-800 text-gray-300 hover:border-gold-500/50 text-left">
+                        B. Huh! I know I am perfect
+                    </button>
+                    <button onclick="handleQ1Answer(this)" class="choice-btn p-4 rounded-lg bg-gray-900 border border-gray-800 text-gray-300 hover:border-gold-500/50 text-left">
+                        C. Or both
+                    </button>
+                </div>
+
+                <div id="q1-feedback" class="mt-6 h-8 text-gold-400 font-handwriting text-2xl opacity-0 transition-opacity"></div>
+            </div>
+        </section>
+
+        <!-- SCREEN 3: Q2 (Friendship) -->
+        <section id="screen-q2" class="screen flex-col items-center justify-center max-w-2xl mx-auto w-full">
+            <div class="glass-panel p-8 md:p-12 rounded-2xl w-full text-center border-t border-gold-500/30">
+                <h2 class="font-subheading text-3xl text-gold-100 mb-6">Question 2</h2>
+                <h3 class="text-2xl font-heading text-white mb-8">What do you think about our friendship?</h3>
+                
+                <div class="grid gap-4 w-full">
+                    <!-- Converted to button list for 3 options -->
+                    <button onclick="handleQ2Answer(this)" class="choice-btn p-5 rounded-lg bg-gray-900 border border-gray-800 text-gray-300 hover:border-gold-500/50 text-center group">
+                        <span class="text-lg group-hover:text-gold-300 transition-colors">We're Greatest</span>
+                    </button>
+                    
+                    <button onclick="handleQ2Answer(this)" class="choice-btn p-5 rounded-lg bg-gray-900 border border-gray-800 text-gray-300 hover:border-gold-500/50 text-center group">
+                        <span class="text-lg group-hover:text-gold-300 transition-colors">You're fantastic</span>
+                    </button>
+
+                    <button onclick="handleQ2Answer(this)" class="choice-btn p-5 rounded-lg bg-gray-900 border border-gray-800 text-gray-300 hover:border-gold-500/50 text-center group">
+                        <span class="text-lg group-hover:text-gold-300 transition-colors">I feel blessed to have you</span>
+                    </button>
+                </div>
+                
+                <div id="q2-feedback" class="mt-8 text-gold-400 font-handwriting text-2xl opacity-0 transition-opacity text-center"></div>
+            </div>
+        </section>
+
+        <!-- SCREEN 4: Q3 (Feel Today) -->
+        <section id="screen-q3" class="screen flex-col items-center justify-center max-w-2xl mx-auto w-full">
+            <div class="text-center mb-10">
+                <i class="fas fa-heart text-gold-500 text-4xl mb-4 opacity-50"></i>
+                <h2 class="font-subheading text-3xl text-white">How do you feel today?</h2>
+                <p class="text-gray-500 text-sm mt-2">Be honest.</p>
+            </div>
+
+            <div class="space-y-4 w-full">
+                <button onclick="handleQ3Answer(this)" class="choice-btn w-full p-6 glass-panel rounded-xl text-left hover:bg-white/5 group border-l-4 border-transparent hover:border-gold-500 transition-all">
+                    <span class="text-xl text-gray-200 group-hover:text-white">Excited for what's coming</span>
+                </button>
+                <button onclick="handleQ3Answer(this)" class="choice-btn w-full p-6 glass-panel rounded-xl text-left hover:bg-white/5 group border-l-4 border-transparent hover:border-gold-500 transition-all">
+                    <span class="text-xl text-gray-200 group-hover:text-white">Grateful for everything</span>
+                </button>
+                <button onclick="handleQ3Answer(this)" class="choice-btn w-full p-6 glass-panel rounded-xl text-left hover:bg-white/5 group border-l-4 border-transparent hover:border-gold-500 transition-all">
+                    <span class="text-xl text-gray-200 group-hover:text-white">Loved and Blessed</span>
+                </button>
+            </div>
+
+            <div id="q3-feedback" class="mt-8 text-gold-400 font-handwriting text-2xl opacity-0 transition-opacity text-center"></div>
+        </section>
+
+        <!-- SCREEN 5: MESSAGE REVEAL -->
+        <section id="screen-message" class="screen flex-col items-center w-full">
+            
+            <!-- Lock Animation Container -->
+            <div id="lock-container" class="flex flex-col items-center justify-center py-20 cursor-pointer" onclick="unlockMessage()">
+                <i id="lock-icon" class="fas fa-lock text-6xl md:text-8xl text-gold-500 mb-6 transition-all duration-500"></i>
+                <p class="text-gold-200 font-heading tracking-widest animate-pulse">TAP TO UNLOCK</p>
+            </div>
+
+            <!-- Actual Message (Hidden initially) -->
+            <div id="actual-message" class="hidden opacity-0 transform translate-y-10 transition-all duration-1000 w-full max-w-4xl">
+                <div class="glass-panel p-8 md:p-16 rounded-lg gold-border relative">
+                    <!-- Decorative quotes -->
+                    <i class="fas fa-quote-left absolute top-8 left-8 text-4xl text-gold-700 opacity-20"></i>
+                    
+                    <div class="font-body text-gray-200 leading-loose space-y-6 text-justify md:text-left">
+                        <p>
+                            <span class="text-gold-400 font-heading text-xl">There are people</span> who support us in loud, visible ways—and then there are those who show up quietly, consistently, and with so much heart that life feels steadier just because they’re there. You are that presence for me. From the smallest gestures—those morning calls, gentle reminders, and simple check-ins—to the moments when I didn’t even have to ask, your support has been a constant comfort.
+                        </p>
+                        <p>
+                            What truly sets you apart is the purity of who you are. Your soul feels genuine, untouched by pretense, and refreshingly real. In a world that often asks people to perform or conform, your authenticity shines through effortlessly.
+                        </p>
+                        <p>
+                            I admire the way you move through life without bending to unnecessary pressure, choosing instead to honor your own values and rhythm. There’s strength in that choice, and a quiet confidence that reminds me of deep-rooted wisdom. You carry that same grounded energy: calm, respectful, and deeply aware of what truly matters.
+                        </p>
+                        <p>
+                            I hope life returns to you all the goodness you put into it. May your hard work continue to open doors, may your dedication bring you success, and may happiness find you in both the big achievements and the soft, everyday moments. You deserve a future filled with peace, growth, and light—steady and reassuring, like shades of blue that calm the heart and clear the mind.
+                        </p>
+                        <p>
+                            Thank you for being you, for being present, and for making life warmer simply by being part of it. Your existence is appreciated more than words can ever fully capture. 💙
+                        </p>
+                    </div>
+
+                    <div class="mt-12 text-right">
+                        <p class="text-gold-500 font-handwriting text-3xl">Always here — Sakshi</p>
+                    </div>
+
+                    <i class="fas fa-quote-right absolute bottom-8 right-8 text-4xl text-gold-700 opacity-20"></i>
+                </div>
+
+                <!-- NEXT BUTTON (Scroll to Extras) -->
+                <div class="flex justify-center mt-12">
+                    <button onclick="revealExtras()" class="text-gray-500 hover:text-gold-500 transition-colors animate-bounce">
+                        <i class="fas fa-chevron-down text-3xl"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREEN 6: EXTRA SECTIONS -->
+        <section id="screen-extras" class="screen flex-col items-center w-full max-w-6xl space-y-20 py-10">
+            
+            <!-- Reasons Cards -->
+            <div class="w-full">
+                <h3 class="font-heading text-3xl text-center text-gold-500 mb-10">Why You Matter</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Card 1 -->
+                    <div class="group h-40 glass-panel rounded-xl flex flex-col items-center justify-center cursor-default transition-all duration-500 hover:bg-gold-900/20">
+                        <h4 class="text-xl text-white font-bold group-hover:hidden transition-all">You Show Up</h4>
+                        <p class="hidden group-hover:block text-gold-300 text-center px-4 animate-fade-in-up text-sm">Even when it's inconvenient, you're there.</p>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="group h-40 glass-panel rounded-xl flex flex-col items-center justify-center cursor-default transition-all duration-500 hover:bg-gold-900/20">
+                        <h4 class="text-xl text-white font-bold group-hover:hidden transition-all">You Listen</h4>
+                        <p class="hidden group-hover:block text-gold-300 text-center px-4 animate-fade-in-up text-sm">Not just to reply, but to understand.</p>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="group h-40 glass-panel rounded-xl flex flex-col items-center justify-center cursor-default transition-all duration-500 hover:bg-gold-900/20">
+                        <h4 class="text-xl text-white font-bold group-hover:hidden transition-all">You Stay</h4>
+                        <p class="hidden group-hover:block text-gold-300 text-center px-4 animate-fade-in-up text-sm">Through the highs and the lows.</p>
+                    </div>
+                    <!-- Card 4 -->
+                    <div class="group h-40 glass-panel rounded-xl flex flex-col items-center justify-center cursor-default transition-all duration-500 hover:bg-gold-900/20">
+                        <h4 class="text-xl text-white font-bold group-hover:hidden transition-all">You're Real</h4>
+                        <p class="hidden group-hover:block text-gold-300 text-center px-4 animate-fade-in-up text-sm">No masks. Just genuine soul.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Signature -->
+            <footer class="text-center py-20 border-t border-gold-900/30 w-full">
+                <h2 class="font-heading text-4xl text-white mb-4">Happy Birthday, Rishabh.</h2>
+                <p class="font-handwriting text-3xl text-gold-500">You’re rare. Don’t ever forget that.</p>
+            </footer>
+
+        </section>
+
+    </div>
+
+    <script>
+        // --- Navigation Logic ---
+        function nextScreen(screenId) {
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(el => {
+                el.classList.remove('active');
+                setTimeout(() => {
+                    if(!el.classList.contains('active')) el.style.display = 'none';
+                }, 800);
+            });
+
+            // Show new screen
+            const next = document.getElementById(screenId);
+            next.style.display = 'flex'; // Prepare for flex layout
+            
+            // Small delay to allow display:flex to apply before opacity transition
+            setTimeout(() => {
+                next.classList.add('active');
+            }, 50);
+        }
+
+        // --- Q1 Logic ---
+        function handleQ1Answer(btn) {
+            const feedback = document.getElementById('q1-feedback');
+            
+            // Disable all buttons in this section
+            const buttons = btn.parentElement.querySelectorAll('button');
+            buttons.forEach(b => b.disabled = true);
+
+            // Highlight selected
+            btn.classList.remove('bg-gray-900', 'border-gray-800');
+            btn.classList.add('bg-gold-500/20', 'border-gold-500');
+
+            // Generic positive feedback for all answers in this version
+            feedback.textContent = "I knew it.";
+            feedback.style.opacity = 1;
+            setTimeout(() => nextScreen('screen-q2'), 2000);
+        }
+
+        // --- Q2 Logic ---
+        function handleQ2Answer(btn) {
+            const feedback = document.getElementById('q2-feedback');
+            
+            // Visual selection
+            const buttons = btn.parentElement.querySelectorAll('button');
+            buttons.forEach(b => b.disabled = true);
+            
+            btn.classList.remove('bg-gray-900', 'border-gray-800');
+            btn.classList.add('bg-gold-900/30', 'border-gold-500', 'scale-105');
+            
+            feedback.textContent = "Glad we agree on that.";
+            feedback.style.opacity = 1;
+            
+            setTimeout(() => nextScreen('screen-q3'), 2000);
+        }
+
+        // --- Q3 Logic ---
+        function handleQ3Answer(btn) {
+            const feedback = document.getElementById('q3-feedback');
+            
+            btn.classList.add('bg-gold-500/20', 'border-gold-500');
+            
+            feedback.textContent = "That's the spirit.";
+            feedback.style.opacity = 1;
+            
+            setTimeout(() => nextScreen('screen-message'), 2000);
+        }
+
+        // --- Unlock Message Logic ---
+        function unlockMessage() {
+            const lockIcon = document.getElementById('lock-icon');
+            const lockContainer = document.getElementById('lock-container');
+            const message = document.getElementById('actual-message');
+            const music = document.getElementById('bg-music');
+
+            // Play Music Immediately on click
+            music.volume = 0.5;
+            music.play().catch(e => console.log("Audio autoplay might be blocked", e));
+
+            // Play animation
+            lockIcon.classList.remove('fa-lock');
+            lockIcon.classList.add('fa-lock-open');
+            
+            // Start confetti
+            startConfetti();
+
+            // Fade out lock, fade in message
+            setTimeout(() => {
+                lockContainer.style.display = 'none';
+                message.classList.remove('hidden');
+                
+                // Trigger reflow
+                void message.offsetWidth; 
+                
+                message.classList.remove('opacity-0', 'translate-y-10');
+            }, 800);
+        }
+
+        function revealExtras() {
+            nextScreen('screen-extras');
+        }
+
+        // --- Confetti Logic (Simplified for Visuals) ---
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let animationId;
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = -10;
+                this.size = Math.random() * 5 + 2;
+                this.speedY = Math.random() * 3 + 1;
+                this.color = Math.random() > 0.5 ? '#D4AF37' : '#FFFFFF';
+            }
+            update() {
+                this.y += this.speedY;
+                if (this.y > canvas.height) this.y = -10;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.fillRect(this.x, this.y, this.size, this.size);
+            }
+        }
+
+        function startConfetti() {
+            for(let i=0; i<100; i++) particles.push(new Particle());
+            animate();
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+    </script>
+</body>
+</html>
